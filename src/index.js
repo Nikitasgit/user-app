@@ -83,7 +83,7 @@ const server = http.createServer((req, res) => {
     return;
   }
   if (url.startsWith("user/profile")) {
-    const userName = url.split("/")[2];
+    const userName = decodeURIComponent(url.split("/")[2]);
     const user = customUsers.find((u) => u.nom === userName);
     if (user) {
       res.writeHead(200, { "Content-type": "text/html" });
@@ -109,7 +109,7 @@ const server = http.createServer((req, res) => {
         (u) => `
         <li>
           <a href="/user/profile/${u.nom}">${u.nom}</a>
-          <form method="POST" action="/user/delete/${u.nom}"">
+          <form method="POST" action="/user/delete/${u.nom}">
             <button type="submit">Supprimer</button>
           </form>
         </li>`
